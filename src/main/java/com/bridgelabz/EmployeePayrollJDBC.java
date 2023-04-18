@@ -85,6 +85,42 @@ public class EmployeePayrollJDBC {
 				int count2 = preparedStatement3.getUpdateCount();
 				System.out.println(count2);
 			}
+			System.out.println("\n");
+			Statement statement1 = connection.createStatement();
+			ResultSet sumResultSet = statement1.executeQuery("select sum(salary) from employee_payroll where gender = \"Male\" group by gender;");
+			while (sumResultSet.next())
+				System.out.println("Sum Of All Male Employee's Salaries: "+ sumResultSet.getInt("sum(salary)"));
+
+			System.out.println();
+			Statement statement2 = connection.createStatement();
+			ResultSet avgResultSet = statement2.executeQuery("select avg(salary) from employee_payroll where gender = \"Male\" group by gender;");
+			while (avgResultSet.next())
+				System.out.println("Average Of All Male Employee's Salaries: "+ avgResultSet.getInt("avg(salary)"));
+
+			System.out.println();
+			Statement statement3 = connection.createStatement();
+			ResultSet minResultSet = statement3.executeQuery("select min(salary) from employee_payroll where gender = \"Male\" group by gender;");
+			while (minResultSet.next())
+				System.out.println("Minimum Of All Male Employee's Salaries: "+ minResultSet.getInt("min(salary)"));
+
+			System.out.println();
+			Statement statement4 = connection.createStatement();
+			ResultSet maxResultSet = statement4.executeQuery("select max(salary) from employee_payroll where gender = \"Male\" group by gender;");
+			while (maxResultSet.next())
+				System.out.println("Maximum Of All Male Employee's Salaries: "+ maxResultSet.getInt("max(salary)"));
+
+			System.out.println();
+			Statement statement5 = connection.createStatement();
+			ResultSet noOfMaleEmpResultSet = statement5.executeQuery("select count(id) from employee_payroll where gender = \"Male\" group by gender;");
+			while (noOfMaleEmpResultSet.next())
+				System.out.println("Number Of Male Employees: "+ noOfMaleEmpResultSet.getInt("count(id)"));
+
+			System.out.println();
+			Statement statement6 = connection.createStatement();
+			ResultSet noOfFemaleEmpResultSet = statement6.executeQuery("select count(id) from employee_payroll where gender = \"Female\" group by gender;");
+			while (noOfFemaleEmpResultSet.next())
+				System.out.println("Number Of Female Employees: "+ noOfFemaleEmpResultSet.getInt("count(id)"));
+
 		} catch (SQLException e) {
 			System.out.println("Catch");
 		}
