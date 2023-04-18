@@ -25,19 +25,32 @@ public class EmployeePayrollJDBC {
 			connection = DriverManager.getConnection(DB_URL,USER,PASS);
 			System.out.println("Connection is successful!!!! "+connection);
 
-			Statement statement1 = connection.createStatement();
-			Statement statement2 = connection.createStatement();
+			PreparedStatement preparedStatement1;
+			PreparedStatement preparedStatement2;
 
-			int count = statement1.executeUpdate("update employee_payroll set basic_pay = \"3000000.0\" where id =2;");
+			preparedStatement1 = connection.prepareStatement("update employee_payroll set basic_pay = ? where id = ?;");
+			preparedStatement1.setDouble(1, 3000000.0);
+			preparedStatement1.setInt(2, 2);
+			int count = preparedStatement1.executeUpdate();
 			System.out.println(count);
 
-			ResultSet resultSet = statement2.executeQuery("select * from employee_payroll");
+			preparedStatement2 = connection.prepareStatement("select * from employee_payroll where name = ?");
+			preparedStatement2.setString(1, "Apeksha");
+			ResultSet resultSet = preparedStatement2.executeQuery();
 			while (resultSet.next()) {
 				System.out.print("ID: " + resultSet.getInt("id"));
 				System.out.print(", Name: " + resultSet.getString("name"));
+				System.out.print(", Gender: " + resultSet.getString("gender"));
 				System.out.print(", Salary: " + resultSet.getDouble("salary"));
-				System.out.print(", Date: " + resultSet.getDate("start"));
-				System.out.println(", Basic Pay: " + resultSet.getString("basic_pay"));
+				System.out.print(", Basic Pay: " + resultSet.getString("basic_pay"));
+				System.out.print(", Deductions: " + resultSet.getString("deductions"));
+				System.out.print(", Taxable Pay: " + resultSet.getString("taxable_pay"));
+				System.out.print(", Income Tax: " + resultSet.getString("income_tax"));
+				System.out.print(", Net Pay: " + resultSet.getString("net_pay"));
+				System.out.print(", Department: " + resultSet.getString("department"));
+				System.out.print(", Start Date: " + resultSet.getDate("start"));
+				System.out.print(", Phone Number: " + resultSet.getString("phonenumber"));
+				System.out.print(", Address: " + resultSet.getString("address"));
 				System.out.println();
 			}
 		} catch (SQLException e) {
